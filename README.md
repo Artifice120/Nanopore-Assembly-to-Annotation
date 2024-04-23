@@ -35,7 +35,7 @@ the
            hat
 with kmer "the" having 2 replicates
 ````
-To process you reads through jellyfish simply use 
+To process you're reads through jellyfish simply use 
 ```
 jellyfish count -m 16 -s 100M -t 8 -C INPUT-READS-HERE.fasta
 ```
