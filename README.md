@@ -137,13 +137,33 @@ busco -i /path/to/your/contigs.fasta -t thread# -l closest_lineage -m geno -o /d
 ```
 * -i input, this is the file path to your contigs you would like scored
 * -l lineage, usually just copy and paste lineage name from their [website](https://busco.ezlab.org/list_of_lineages.html) and paste the one that is most closely related to the orgainism that is being sequenced.
+> * leave out the date in the name of the lineage ( ex: hemiptera_odb10 not hemiptera_odb10.2019-04-24 )
 * -m mode, assuming this is a genome set this to "geno"
 * -o output, the path to the directory to deposit BUSCO's output files
 * -t threads, the number of threads/CPU you would like to use. Default= 1, usually 1 thread takes ~15-30 minutes to finish
 * -f force, when present overwrites any output files that already exist in the same output directory.
 
+### Example BUSCO output
+
+![image](https://github.com/Artifice120/Nanopore-Assembly-to-Annotation/assets/160672410/6a4d9504-3899-44cb-bd87-e79648d8de4e)
+
+**In this example there are several issues with the assembly**
+1. The fragmentation and missing busco percentage is very high (30%). At this amount the assembly has to be redone with diffrent reads or reads that are mapped/selected diffrently
+2. The duplication level is somewhat high (21%). This can be significantly reduced by purging the haplotigs.
 ------
-## Purging haplotigs
+## [Purging haplotigs](https://bitbucket.org/mroachawri/purge_haplotigs/src/master/)
+
+Purging haplotigs is useful for assesing the quality of the reads with a contig coverage histogram similar to genomescope as well as reducing duplication with the purge function.
+
+Before the histogram can be formed or haplotigs can be purged, the reads used for assembly must first be aligned/mapped to your contigs/assembly in question.
+```
+minimap2 -t 48 -ax map-ont /path/to/contigs.fasta /path/to/reads.fa --secondary=no | samtools sort -m 10G -o /lustre/isaac/scratch/jtorre28/polishing/aligned.bam -T /lustre/isaac/scratch/jtorre28/polishing/tmp.ali
+```
+* -t threads, the number of threads/CPu's to be used by this program. (48 threads on a 48 CPU node worked)
+* -ax preset options, map-ont is the default and is what worked...
+* /path/to/contigs.fasta , the path to the fasta contig file being polished
+* /path/to/reads.fa , the path to the reads used in the assembly of the contigs.
+> * This program can only handle [sanatized reads](https://github.com/Artifice120/Nanopore-Assembly-to-Annotation/edit/main/README.md#rough-draft-for-a-guide-on-one-way-to-assembly-and-annotate-nanopore-reads)
 ------
 ## Blobtools
 -----
