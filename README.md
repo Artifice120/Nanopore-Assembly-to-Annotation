@@ -125,9 +125,22 @@ corMhapFilterThreshold=0.0000000002 corMhapOptions="--threshold 0.80 --num-hashe
 
 ------
 ## Busco
-#Overview
 
-After obtaining your contigs from you're assembler the program BUSCO is used to estimate the completeness and quality of your assembly. Even though the contigs are almost gaurunteed to need additional "polishing" done; The Busco results are still useful for determining in what ways the assembly needs to be improved.
+Overview:
+
+After obtaining your contigs from you're assembler the program BUSCO is used to estimate the completeness and quality of your assembly. Even though the contigs are almost gaurunteed to need additional "polishing" done; The Busco results are still useful for determining in what ways the assembly needs to be improved or re-assembled.
+
+> Installation Tip: Had some issues with installing into a conda environment. Noticed it did not give me any issues when I installed it into an environment with blobtoolkit and minimap already installed. 
+
+```
+busco -i /path/to/your/contigs.fasta -t thread# -l closest_lineage -m geno -o /directory/for/ouput/files/ -f
+```
+* -i input, this is the file path to your contigs you would like scored
+* -l lineage, usually just copy and paste lineage name from their [website](https://busco.ezlab.org/list_of_lineages.html) and paste the one that is most closely related to the orgainism that is being sequenced.
+* -m mode, assuming this is a genome set this to "geno"
+* -o output, the path to the directory to deposit BUSCO's output files
+* -t threads, the number of threads/CPU you would like to use. Default= 1, usually 1 thread takes ~15-30 minutes to finish
+* -f force, when present overwrites any output files that already exist in the same output directory.
 
 ------
 ## Purging haplotigs
