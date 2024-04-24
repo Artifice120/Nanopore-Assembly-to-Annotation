@@ -125,6 +125,10 @@ corMhapFilterThreshold=0.0000000002 corMhapOptions="--threshold 0.80 --num-hashe
 
 ------
 ## Busco
+#Overview
+
+After obtaining your contigs from you're assembler the program BUSCO is used to estimate the completeness and quality of your assembly. Even though the contigs are almost gaurunteed to need additional "polishing" done; The Busco results are still useful for determining in what ways the assembly needs to be improved.
+
 ------
 ## Purging haplotigs
 ------
