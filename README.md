@@ -122,7 +122,6 @@ If a seqeunce is especially repetitive it will require significantly more time a
 corMhapFilterThreshold=0.0000000002 corMhapOptions="--threshold 0.80 --num-hashes 512 --num-min-matches 3"
 ```
 
-
 ------
 ## [Busco](https://busco.ezlab.org/)
 
@@ -288,6 +287,7 @@ blastn -db nt \
        -num_threads 48 \
        -out /path/to/blast.out
 ```
+
 * -db database, this option specifies what database is being used (nt)
 * -query /path/to/curated.fasta , input option with path path to curated fasta file to be searched
 * -outfmt "6 qseqid staxids bitscore" , must be in this format for blobtools, only prints the query sequence ID , taxonomy id number, bitscore.
@@ -299,8 +299,11 @@ blastn -db nt \
 
 > **Note:** the backwards slash " \ " is just to have one command on multpile lines without it being treated as multiple commands (easier to read). Also known as "escaping".
 
+now that the contigs have been blast searched with taxonomy ID's the results can be uploaded into your blob directory
 
+```
 
+```
 -----
 ## Remove Chimeric contigs
 -----
