@@ -124,7 +124,7 @@ corMhapFilterThreshold=0.0000000002 corMhapOptions="--threshold 0.80 --num-hashe
 
 
 ------
-## Busco
+## [Busco](https://busco.ezlab.org/)
 
 Overview:
 
@@ -153,19 +153,79 @@ busco -i /path/to/your/contigs.fasta -t thread# -l closest_lineage -m geno -o /d
 ------
 ## [Purging haplotigs](https://bitbucket.org/mroachawri/purge_haplotigs/src/master/)
 
-Purging haplotigs is useful for assesing the quality of the reads with a contig coverage histogram similar to genomescope as well as reducing duplication with the purge function.
+[Purge haplotigs](https://bitbucket.org/mroachawri/purge_haplotigs/src/master/)  is useful for assesing the quality of the reads with a contig coverage histogram similar to genomescope as well as reducing duplication with the purge function.
 
-Before the histogram can be formed or haplotigs can be purged, the reads used for assembly must first be aligned/mapped to your contigs/assembly in question.
+### Before the histogram can be formed or haplotigs can be purged, the reads used for assembly must first be aligned/mapped to your contigs/assembly in question.
 ```
-minimap2 -t 48 -ax map-ont /path/to/contigs.fasta /path/to/reads.fa --secondary=no | samtools sort -m 10G -o /lustre/isaac/scratch/jtorre28/polishing/aligned.bam -T /lustre/isaac/scratch/jtorre28/polishing/tmp.ali
+minimap2 -t 48 -ax map-ont /path/to/contigs.fasta /path/to/reads.fa --secondary=no | samtools sort -m 10G -o /path/to/aligned.bam -T /path/to/tmp.ali
 ```
-* -t threads, the number of threads/CPu's to be used by this program. (48 threads on a 48 CPU node worked)
+* -t threads, the number of threads/CPU's to be used by this program. (48 threads on a 48 CPU node worked)
 * -ax preset options, map-ont is the default and is what worked...
 * /path/to/contigs.fasta , the path to the fasta contig file being polished
 * /path/to/reads.fa , the path to the reads used in the assembly of the contigs.
-> * This program can only handle [sanatized reads](https://github.com/Artifice120/Nanopore-Assembly-to-Annotation/edit/main/README.md#rough-draft-for-a-guide-on-one-way-to-assembly-and-annotate-nanopore-reads)
+> * This program can only handle [sanatized reads](https://github.com/Artifice120/Nanopore-Assembly-to-Annotation/tree/main?tab=readme-ov-file#rough-draft-for-a-guide-on-one-way-to-assembly-and-annotate-nanopore-reads) otherwise it will just crash with many error messages.
+* --secondary=no , specifying that secondary alignment output is not needed.
+------
+* -m memory, the amount of memory(RAM) to allocate to samtools (check memory of node/machine to set value)
+* -o /path/to/aligned.bam , path to where you want the output, it must be named aligned.bam
+* -T /path/to/tmp.ali , path for temporary file(s), this actually does need to be named tmp.ali
+
+**Once finished there should be a aligned.bam file**
+
+### Generating histogram with PurgeHaplotigs
+
+After generating a aligned.bam file the coverage histogram can be generated with the command below:
+```
+purge_haplotigs  hist  -b /path/to/aligned.bam -g /path/to/contigs.fasta -t 30
+```
+* -b /path/to/aligned.bam , path to aligned.bam file
+* -g /path/to/contigs.fasta , path to the same contigs in question.
+* -t threads, number of threads/CPU to allocate to this task (Check CPU's that are available on your machine or node)
+
+### Using the histogram
+
+Here is an example of a read coverage histogram
+
+
+ ![Contig_Polishing histogram 200](https://github.com/Artifice120/Nanopore-Assembly-to-Annotation/assets/160672410/f45d4154-ac43-44b9-8984-4deb24844100)
+
+This histogram is used to determine the; -l low , -m mid , and -h high points to be used in the following coverage analysis step.
+
+I found it useful to go through the [issue page of purge haplotigs](https://bitbucket.org/mroachawri/purge_haplotigs/issues?q=histogram) in the closed issue section to get a feel for what selections worked and did not work for a given histogram.
+In this case I chose -l 8  -m 55  -h 140 since the points between -m and -h went through more stringent filtering than the contigs between points -l and -m.
+
+### Read Coverage Analysis
+
+Once the -l -m and -h values have been determined from the histogram adn the aligned.bam.200.gencov file has been located the following command can be used to obtain the coverage stats csv file that will allow the correct sections to be purged from the contigs.
+
+```
+purge_haplotigs  cov  -i /path/to/aligned.bam.200.gencov -l #  -m #  -h #  -o coverage_stats.csv -j 80  -s 80
+```
+* -i /path/to/aligned.bam.200.gencov , input, the path to the aligned.bam.200.gencov file generated from the histogram step.
+* -l #  -m #  -h # , the -l low -m mid -h high values to be used based on the histogram peak(s).
+* -o output, name of the output file (coverage_stats.csv is convienent since the pipline is not finished yet)
+* -j junk, label a contig as "junk" if this percentage of it is below the -l cutoff or above the -h cutoff. (default=80)
+* -s suspect, label as "suspected haplotig" if this percentage or less of a contig is diploid level converage.
+
+### Actually Purging the Haplotigs
+
+Once the coverage stats csv file has been generated the purging command can be used to generate the final curated contig files.
+```
+purge_haplotigs  purge  -g /path/to/same/contigs.fasta  -c coverage_stats.csv -t 30
+```
+* -g input, place the file path to the same contig fasta file that you have been using to this point.
+* -c coverage, plave the path to the coverage_stats.csv file made in the previous step.
+* -t threads, number of threads/CPU's you wish to use (check the CPU's available for your machine or node)
+
+**Once the curated fasta files are generated feel free to run the new file through busco to see how the scores compare to the original contigs**
+
+> Poof, your a wizard!
+ 
 ------
 ## Blobtools
+
+
+
 -----
 ## Remove Chimeric contigs
 -----
