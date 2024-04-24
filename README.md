@@ -222,7 +222,82 @@ purge_haplotigs  purge  -g /path/to/same/contigs.fasta  -c coverage_stats.csv -t
 > Poof, your a wizard!
  
 ------
-## Blobtools
+## [Blobtools](https://github.com/blobtoolkit/blobtoolkit)
+
+Now that there are contig files with a satisfactory Busco score, there needs to be a way to visualize all the information (Busco, N50, coverage, taxonomy, GC content ...)
+[Blobtools](https://github.com/blobtoolkit/blobtoolkit) orgainizes this information into a human readable figures that can manipulated with a guided user interface.
+
+Once blobtools is installed a blob directory (BlobDir) can be created from your curated fasta file.
+```
+blobtools create --fasta /path/to/curated.fasta Name
+```
+* --fasta /path/to/curated.fasta , fasta option with the path to the curated fasta file.
+* Name , the name of the directory to be created (It will apear on the graphs so **choose wisely**)
+
+> Congrats its a ... blank directory?
+
+Now that there is a blob directory we can now add info about our contigs to it.
+
+This command will add the read coverage we already made in the purge haplotigs portion of the process.
+
+```
+blobtools add --cov /path/to/aligned.bam Name
+```
+* --cov /path/to/aligned.bam , coverage option with path to aligned.bam file that was made previously in the purge haplotigs prep.
+* Name , name of blob directory you just made.
+
+This next command will add the busco results for the curated reads that we also already have (happy accidents)
+> * 3
+>> * 2
+>>> * 1
+```
+blobtools add --busco /path/to/busco/full_table.tsv Name
+```
+* --busco /path/to/busco/full_table.tsv , busco option with the path to the busco output file full_table.tsv
+* Name , still the name of the blob directory you just made.
+-----
+Unlike the last three files added this next file has not been generated in a previous step
+
+### **Adding taxonomy from BLAST hits**
+For most large assemblies the only way to generate blast hits is through
+
+### Installing [Blast+](https://anaconda.org/bioconda/blast) with the nr and taxonomy database.
+
+After installing blast+ command line tool you will need to also install the non-redundant nucleotide database.
+This will use ~60Gb of storage so pick a place that has room. This will take ~6 hours.
+```
+update_blastdb.pl --decompress nr
+```
+Next the taxonomy database will need to be installed specifically for blobtools
+
+```
+mkdir -p taxdump;
+cd taxdump;
+curl -L https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz | tar xzf -;
+cd ..;
+```
+once downloaded the curated contigs can be Blast searched with.
+
+```
+blastn -db nt \
+       -query /path/to/curated.fasta \
+       -outfmt "6 qseqid staxids bitscore std" \
+       -max_target_seqs 10 \
+       -max_hsps 1 \
+       -evalue 1e-25 \
+       -num_threads 48 \
+       -out /path/to/blast.out
+```
+* -db database, this option specifies what database is being used (nt)
+* -query /path/to/curated.fasta , input option with path path to curated fasta file to be searched
+* -outfmt "6 qseqid staxids bitscore" , must be in this format for blobtools, only prints the query sequence ID , taxonomy id number, bitscore.
+*  -max_target_seqs 10 \
+       -max_hsps 1 \
+       -evalue 1e-25 \  , Just the default values may be changed to be more or less strict.
+* -num_threads , threads/cpus to be used for the search (check CPU capability of your machine or node before setting)
+* -out /path/to/blast.out , output option with path to the desired name of your .out file.
+
+> **Note:** the backwards slash " \ " is just to have one command on multpile lines without it being treated as multiple commands (easier to read). Also known as "escaping".
 
 
 
