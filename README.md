@@ -346,6 +346,15 @@ After deleting contigs another Blob Directory can be made with the new contig fi
 
 -----
 
+## **Annotation with Annota_Pipeline**
+
+> The Annota Pipline is the program that worked for me at the time, if you are not sequencing insects or fungus, try NCBIs [Prokaryote](https://github.com/ncbi/pgap#pgap) or the alpha of the [Eukaryote](https://github.com/ncbi/egapx#eukaryotic-genome-annotation-pipeline---external-egapx) annotation tools.
+
+* If you are installing using conda be sure to also download the example [configuration file](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)
+* Since the Blobtools program already required the install of blast+ the databases Blast nr, Pfam, and Swissprot seems like the easiest database options.
+* Once the databases are installed be sure to change the fields in the configuration file to match the locations where the databases were installed as well as the paths to python and perl.
+
+
 
 
 
