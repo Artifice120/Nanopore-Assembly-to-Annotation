@@ -301,12 +301,51 @@ blastn -db nt \
 
 now that the contigs have been blast searched with taxonomy ID's the results can be uploaded into your blob directory
 
-```
 
 ```
+blobtools add --replace --hits /path/to/blast.out --taxdump /path/to/taxdump/Directory/
+```
+* --hits /path/to/blast.out , include path to the blast.out file made in the previous step with the --hits option in front.
+* --taxdump /path/to/taxdump/Directory/ , include path to the **Directory** with the --taxdump option in front.
+
+### Viewing Blobtools Figures
+
+To view the blobtools figures with the uploaded data you will need a computer with a gui.
+This is usually not an issue unless you are using a remote cluster, In this case you will have to make sure the following command is run in an enviroment/node that support the firefox or chrome browser.
+
+To link the browser to blobtools preform the following command beforehand while inside the conda enviroment you installed blobtools into.
+```
+conda install -c conda-forge firefox geckodriver
+```
+> Only mentioning this since it is not required for installation. Refer to their [git-hub](https://github.com/blobtoolkit/blobtoolkit#installing) if there are still issues.
+
+To see if this is set up correctly run this command
+```
+blobtools view --local _
+```
+This will give a link to the locally hosted webpage for the blobtools viewer.
+
+Here is an example of one such figure.
+
+![image](https://github.com/Artifice120/Nanopore-Assembly-to-Annotation/assets/160672410/f9af0946-f697-4d88-a0e3-848b5365803c)
+
+In this image it is possibly to see that despite having a high Busco score; there is significant Pseudomonadota contamination in the assembly.
+
+Exporting the corresponding table allows a all the contigs to be conveniently sorted by their taxonomy hits. Contigs that completely match the contaminating Pseudomonadot can be removed by copy and pasting a list of the "bad" contigs into a ids.txt file. then the following command can delete all contigs from the curated fasta file with ID's that match the ones in the provided in the list.
+
+> **:warning: Make sure you make a copy of the original curated.fasta file before deleting contigs, there is no going back :warning:**
+```
+awk 'BEGIN{while((getline<"ids.txt")>0)l[">"$1]=1}/^>/{f=!l[$1]}f' /path/to/curated.fasta 
+```
+* /path/to/curated.fasta , the path to the fasta file that you are **permanently** deleting contigs from :warning:
+
+> Some contigs may have a mixture of taxonomy matches in contigs with your target orgainism, this can be either from chimeric reads that are generated from contamination or from horizontal gene transfer or something else...
+
+After deleting contigs another Blob Directory can be made with the new contig file and all of the other same files.
+* Be sure to make a new Busco report after removing contigs to see if it is worth the loss in completeness if any.
+
 -----
-## Remove Chimeric contigs
------
+
 
 
 
