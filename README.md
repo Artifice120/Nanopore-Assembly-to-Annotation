@@ -346,15 +346,31 @@ After deleting contigs another Blob Directory can be made with the new contig fi
 
 -----
 
-## **Annotation with Annota_Pipeline**
+## **Annotation with [AnnotaPipeline](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)**
 
 > The Annota Pipline is the program that worked for me at the time, if you are not sequencing insects or fungus, try NCBIs [Prokaryote](https://github.com/ncbi/pgap#pgap) or the alpha of the [Eukaryote](https://github.com/ncbi/egapx#eukaryotic-genome-annotation-pipeline---external-egapx) annotation tools.
 
+### **Overview of [AnnotaPipeline](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)**
+
+Annota pipline uses Augustus to generate a GFF file from an genomome assembly which is why it either requires an available refrence species or a training file for Augustus. The GFF file is then Annotated by searching through three databases one of which is your choice; However, Blast's nr database is the easiest option since BLAST+ was downloaded for the Blobtools taxonomy upload. Optional features such as Kallisto and Comet if the user also has RNA-seq and proteomic spectrometry data. 
+
+**Notes on Installation of [AnnotaPipeline](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)**
+
 * If you are installing using conda be sure to also download the example [configuration file](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)
-* Since the Blobtools program already required the install of blast+ the databases Blast nr, Pfam, and Swissprot seems like the easiest database options.
+* Since the Blobtools program already required the install of blast+; The databases Blast nr, Pfam, and Swissprot seems like the easiest database options.
 * Once the databases are installed be sure to change the fields in the configuration file to match the locations where the databases were installed as well as the paths to python and perl.
 
+> * Before running AnnnotaPipline be sure to check that the individual programs and corresponding databases are functional
 
+Since all of the parameters will be entered in the Config file the actual command line is simple 
+
+```
+AnnotaPipeline.py -c /path/to/config.yaml -s /path/to/curated.fasta
+```
+* -c /path/to/config.yaml , config option with path to config.yaml (download example config file [here](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)
+* -s /path/to/curated.fasta , input option with path to curated fasta file or gff file if you already have one somehow.
+
+> This needs several days of continous runtime to complete all of its searches
 
 
 
