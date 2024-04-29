@@ -338,6 +338,7 @@ Exporting the corresponding table allows a all the contigs to be conveniently so
 awk 'BEGIN{while((getline<"ids.txt")>0)l[">"$1]=1}/^>/{f=!l[$1]}f' /path/to/curated.fasta 
 ```
 * /path/to/curated.fasta , the path to the fasta file that you are **permanently** deleting contigs from :warning:
+* "ids.txt" , this is the file where all the contig ID's of the contigs to be removed needs to be manually created beforehand.  
 
 > Some contigs may have a mixture of taxonomy matches in contigs with your target orgainism, this can be either from chimeric reads that are generated from contamination or from horizontal gene transfer or something else...
 
