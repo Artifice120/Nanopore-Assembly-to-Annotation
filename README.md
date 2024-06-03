@@ -265,7 +265,7 @@ For most large assemblies the only way to generate blast hits is through
 After installing blast+ command line tool you will need to also install the non-redundant nucleotide database.
 This will use ~60Gb of storage so pick a place that has room. This will take ~6 hours.
 ```
-update_blastdb.pl --decompress nr
+update_blastdb.pl --decompress nt
 ```
 Next the taxonomy database will need to be installed specifically for blobtools
 
