@@ -411,7 +411,36 @@ AnnotaPipeline.py -c /path/to/config.yaml -s /path/to/curated.fasta
 
 > This needs several days of continous runtime to complete all of its searches
 
+### Annotations with E-gapx
 
+> WARNING THIS MAY NOT WORK AS THE PROGRAM IS IN ITS ALPHA-STAGE
 
+## Installing E-gapx
 
+First download the git-hub files with the following commands;
+
+```
+git clone https://github.com/ncbi/egapx.git
+cd egapx
+```
+Once downloaded, install the required dependencies into a python virtual environment in the same directory ;
+
+```
+python -m venv v-env-egap
+source v-env-egap/bin/activate
+pip install -r ui/requirements.txt
+```
+Once the dependencies are installed, install singularity in a conda environment in the same directory.
+```
+conda create -p c-env-egap
+conda activate c-env-egap/
+conda install -c conda-forge singularity
+```
+E-gapx can now run without root permissions while both the conda and python environment are activated
+
+Run the following command to ensure the program is functional
+
+```
+python3 ui/egapx.py ./examples/input_D_farinae_small.yaml -e singularity -w temporary_files -o example_out
+```
 
