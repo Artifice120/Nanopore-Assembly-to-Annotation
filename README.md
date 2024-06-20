@@ -411,7 +411,7 @@ AnnotaPipeline.py -c /path/to/config.yaml -s /path/to/curated.fasta
 
 > This needs several days of continous runtime to complete all of its searches
 
-### Annotations with E-gapx
+# Annotations with E-gapx
 
 > WARNING THIS MAY NOT WORK AS THE PROGRAM IS IN ITS ALPHA-STAGE
 
