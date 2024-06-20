@@ -226,6 +226,44 @@ purge_haplotigs  purge  -g /path/to/same/contigs.fasta  -c coverage_stats.csv -t
 Now that there are contig files with a satisfactory Busco score, there needs to be a way to visualize all the information (Busco, N50, coverage, taxonomy, GC content ...)
 [Blobtools](https://github.com/blobtoolkit/blobtoolkit) orgainizes this information into a human readable figures that can manipulated with a guided user interface.
 
+# Installing Blobtools
+
+Since Blobtools is originally made to be installed with python (ie, pip). A python virtual environment is easier to use.
+
+Create a local virtual environment with the command below;
+
+```
+python -m venv path/you/want/env/with/name
+```
+This will make a "empty" directory for your virtual environment at the specified path.
+
+Once the virtual environment is made activate it with the following command structure :
+
+```
+source path/to/env/you/just/made/bin/activate
+```
+
+The path will be the same path that you just made your environment in plus bin and activate.
+
+Once activated make a conda environment in the same directory with the following command:
+
+```
+conda create -p path/to/env/name
+```
+Activate this environment as well.
+
+```
+conda activate path/to/env/name
+```
+with both environments activated the conda package required for blobtools can be installed.
+
+```
+conda install -c conda-forge firefox geckodriver
+```
+>Blobtools is now installed
+
+# Using Blobtools
+
 Once blobtools is installed a blob directory (BlobDir) can be created from your curated fasta file.
 ```
 blobtools create --fasta /path/to/curated.fasta Name
@@ -372,6 +410,7 @@ AnnotaPipeline.py -c /path/to/config.yaml -s /path/to/curated.fasta
 * -s /path/to/curated.fasta , input option with path to curated fasta file or gff file if you already have one somehow.
 
 > This needs several days of continous runtime to complete all of its searches
+
 
 
 
