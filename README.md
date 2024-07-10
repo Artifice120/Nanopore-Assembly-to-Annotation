@@ -371,11 +371,10 @@ In this image it is possibly to see that despite having a high Busco score; ther
 
 Exporting the corresponding table allows a all the contigs to be conveniently sorted by their taxonomy hits. Contigs that completely match the contaminating Pseudomonadot can be removed by copy and pasting a list of the "bad" contigs into a ids.txt file. then the following command can delete all contigs from the curated fasta file with ID's that match the ones in the provided in the list.
 
-> **:warning: Make sure you make a copy of the original curated.fasta file before deleting contigs, there is no going back :warning:**
 ```
-awk 'BEGIN{while((getline<"ids.txt")>0)l[">"$1]=1}/^>/{f=!l[$1]}f' /path/to/curated.fasta 
+awk 'BEGIN{while((getline<"ids.txt")>0)l[">"$1]=1}/^>/{f=!l[$1]}f' /path/to/curated.fasta > newfile.fasta
 ```
-* /path/to/curated.fasta , the path to the fasta file that you are **permanently** deleting contigs from :warning:
+* /path/to/curated.fasta , the path to the fasta file that you are "removing" contigs from.
 * "ids.txt" , this is the file where all the contig ID's of the contigs to be removed needs to be manually created beforehand.  
 
 > Some contigs may have a mixture of taxonomy matches in contigs with your target orgainism, this can be either from chimeric reads that are generated from contamination or from horizontal gene transfer or something else...
