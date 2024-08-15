@@ -262,6 +262,13 @@ conda install -c conda-forge firefox geckodriver
 ```
 >Blobtools is now installed
 
+> Oh wait, JK
+install the actuall blobtools package with this pip command while both environments are still activae
+```
+pip install blobtools[full]
+```
+> Now blobtools is actuallu installed
+
 # Using Blobtools
 
 Once blobtools is installed a blob directory (BlobDir) can be created from your curated fasta file.
