@@ -419,7 +419,7 @@ AnnotaPipeline.py -c /path/to/config.yaml -s /path/to/curated.fasta
 
 # Annotations with E-gapx
 
-> WARNING THIS MAY NOT WORK AS THE PROGRAM IS IN ITS ALPHA-STAGE
+> WARNING: THIS MAY NOT WORK FOR YOU'RE ASSEMBLY AS THE PROGRAM IS IN ITS ALPHA-STAGE
 
 ## Installing E-gapx
 
