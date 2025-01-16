@@ -391,6 +391,20 @@ After deleting contigs another Blob Directory can be made with the new contig fi
 
 -----
 
+## **Annotation with [Helixer](https://github.com/weberlab-hhu/Helixer)**
+> An AI gene prediction tool with pretrained models spanning theentire tree of life.
+> Is much more complete and accurate compared to E-gapx and Braker at least for aphids in my experience.
+
+### **Docker installation of [Helixer](https://github.com/weberlab-hhu/Helixer)**
+
+The most hassle free approach to installing Helixer is the docker image using singularity (I don't have root access).
+
+```
+singularity pull docker://gglyptodon/helixer-docker:helixer_v0.3.4_cuda_12.2.2-cudnn8
+```
+Helixer and all of its depencies will be installed.
+
+
 ## **Annotation with [AnnotaPipeline](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)**
 
 > The Annota Pipline is the program that worked for me at the time, if you are not sequencing insects or fungus, try NCBIs [Prokaryote](https://github.com/ncbi/pgap#pgap) or the alpha of the [Eukaryote](https://github.com/ncbi/egapx#eukaryotic-genome-annotation-pipeline---external-egapx) annotation tools.
