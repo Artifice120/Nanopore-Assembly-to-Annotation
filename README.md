@@ -392,7 +392,7 @@ After deleting contigs another Blob Directory can be made with the new contig fi
 -----
 
 ## **Annotation with [Helixer](https://github.com/weberlab-hhu/Helixer)**
-> An AI gene prediction tool with pretrained models spanning theentire tree of life.
+> An AI gene prediction tool with pretrained models spanning fungi, vertibrates, invertebrates, and land plants.
 > Is much more complete and accurate compared to E-gapx and Braker at least for aphids in my experience.
 
 ### **Docker installation of [Helixer](https://github.com/weberlab-hhu/Helixer)**
