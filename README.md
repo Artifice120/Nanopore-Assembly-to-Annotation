@@ -81,7 +81,7 @@ Whichever method you use once you get the results from genomescope they will loo
 ### Why Canu ?
 Despite having an overall longer runtime [Canu](https://github.com/marbl/canu) makes up for that by being able to continue were it left off meaning nodes on slurm with short run-times and wait times can be used in series which results in an overall smaller queue time. Also thanks to its scoring system there are less reads that are ignored and instead are given a score allowing assemblies to be produced with less read coverage needed.
 ### Why not Canu ?
-If you already have high read coverage (~80) Canu may not be the best option as it will reach its peak in quality which can be surpassed by other assemblers that require higher coverage but produce faster and better contigs/assemblies such as Trinity or Hi-Canu module within the Canu installation.
+If you already have high read coverage (~80) Canu may not be the best option as it will reach its peak in quality which can be surpassed by other assemblers that require higher coverage but produce faster and better contigs/assemblies such as NextDenovo or Hi-Canu module within the Canu installation.
 
 ## [Canu](https://github.com/marbl/canu)
 ----
