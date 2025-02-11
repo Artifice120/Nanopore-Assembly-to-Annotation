@@ -391,7 +391,7 @@ After deleting contigs another Blob Directory can be made with the new contig fi
 
 -----
 
-## **Annotation with [Helixer](https://github.com/weberlab-hhu/Helixer)**
+# **Annotation with [Helixer](https://github.com/weberlab-hhu/Helixer)**
 > An AI gene prediction tool with pretrained models spanning fungi, vertibrates, invertebrates, and land plants.
 > Is much more complete and accurate compared to E-gapx and Braker at least for aphids in my experience.
 
@@ -404,6 +404,32 @@ singularity pull docker://gglyptodon/helixer-docker:helixer_v0.3.4_cuda_12.2.2-c
 ```
 Helixer and all of its depencies will be installed.
 
+The models that Helixer uses need to be downloaded next with the following command.
+
+```
+PLACEHOLDER
+```
+
+To run the helixer singularity container within an sbatch or bash script use following format:
+```
+singularity exec --nv --env 'RUST_BACKTRACE=full' /path/to/container/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif Helixer.py
+```
+* singularity exec : Runs/executes a single command within the sinngularity container. Think of it as a smaller and seperate computer within this one.
+* --nv --env 'RUST_BACKTRACE=full' : ensures the rust dependency is operational
+* path/to/container/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif : this is the file location of wherever you saved the singularity container.
+* Helixer.py : the actual command you want to run (Example in this case)
+
+> Now that the singularity portion is explained, th full helixer command is as follows:
+
+```
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path /lustre/isaac/scratch/jtorre28/next-denovo/NextDenovo/ue/ue-nd-patched.filtered.fa --gff-output-path /lustre/isaac/scratch/jtorre28/AI-ue-reader/ue-nd-patched.gff --lineage invertebrate --species Uroleucon_erigeronense --lineage /lustre/isaac/scratch/jtorre28/singularity_containers/tmp
+```
+
+* --fasta-path : is followed by the file path for the fasta file with the assembled and polished contigs that are to be annotated.
+* --gff-output-path : is followed by the anticipated file location to output the gff file (annotations). NOTE: Although the file will be created, any directories that dont exist will not be created resulting in the output file being placed in the working directory. Make the directory before running helixer if needed.
+* --lineage : this lineage refrences to the model that will be used. Make sure you already have the correspoding models downloaded before running.
+* --species : Just pick any name to be used in the files ( it does nothing else )
+* --tmp : Place to store temporary running files, only matter in a place like a slurm cluster where diffrent directories have diffrent storage and I/O limits.
 
 ## **Annotation with [AnnotaPipeline](https://github.com/bioinformatics-ufsc/AnnotaPipeline/blob/v1.0/config/config_example.yaml)**
 
