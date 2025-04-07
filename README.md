@@ -654,7 +654,39 @@ Once all the required fields are finished the functional annotation can run with
 ```
 singularity exec entap.sif EnTAP --runN --run-ini /path/to/entap_run.params --entap-ini /path/to/entap_config.ini
 ```
+## Adding EnTAP Homology back to GFF annotations
 
+Output of EnTAP results are unfortunantly only available as a tsv file. In order to add the final results of the functional annotation they need to be added to the GFF attributes.
+
+This is done with the program [AGAT](https://github.com/NBISweden/AGAT) using their ```agat_sp_manage_functional_annotation.pl``` perl script 
+
+Before this can be done the final results of EnTAP need to be parsed to be compatible with AGAT.
+
+The AWK script below will parse the output since the EnTAP input file enties have the same names used in the GFF file ( from GFFread earlier )
+
+```
+awk -F'\t' '{print $1"\t"$2"\t"$13 }' entap_results.tsv  | tail -n +2 | awk -F "\t" '{if ( $2 == "NA" ) {print $1"\t""hypothetical protein""\t"$3 ;} else {print $1"\t"$2"\t"$3} }' | awk -F "\t" '{if ( $3 == "NA" ) {print $1"\t"$2"\t""hypothetical protein" ;} else {print $1"\t"$2"\t"$3} }' > homology-output.tsv
+```
+> Be sure to change the paths of the input and output tsv files
+
+After this file is created add the following headers so the attributes actually have names and not just values 
+
+> Any of these may be changed as preffred except for the ID header
+> Must also be tab seperated (spaces might look the same so type it instead of copy pasting to be safe)
+
+```
+ID      homology        product-homology
+```
+
+Finally, the AGAT perl script can be used to add the attributes 
+
+```
+agat_sq_add_attributes_from_tsv.pl --gff Macrosiphon.gff --tsv homology-gene-info.tsv  -o test-homology.gff3
+```
+
+* --gff : Path to the gff file 
+* --tsv : Path to prepared tsv file 
+* -o : name of output file
 
 
 
