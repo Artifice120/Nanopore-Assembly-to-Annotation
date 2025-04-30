@@ -230,44 +230,28 @@ Now that there are contig files with a satisfactory Busco score, there needs to 
 
 Since Blobtools is originally made to be installed with python (ie, pip). A python virtual environment is easier to use.
 
+However, python 3.9.21 is recommended. in order to install without root permissions if anaconda or micromamba is already installed you can create a conda environment with this exact verion:
+
+```
+micromamba create -n python3.9-env
+micromamba activate python3.9-env
+micromamba install -c anaconda -c conda-forge python==3.9.21
+```
+Now that a conda environment with the correct version of Python is activated
+
 Create a local virtual environment with the command below;
 
 ```
-python -m venv path/you/want/env/with/name
+python3.9 -m venv path/you/want/env/with/name
+source path/you/want/env/with/name/bin/activate
 ```
-This will make a "empty" directory for your virtual environment at the specified path.
-
-Once the virtual environment is made activate it with the following command structure :
-
-```
-source path/to/env/you/just/made/bin/activate
-```
-
-The path will be the same path that you just made your environment in plus bin and activate.
-
-Once activated make a conda environment in the same directory with the following command:
+Once the actual virtual evironment is built and activated the blobtools dependencies and executables can be intalled with
 
 ```
-conda create -p path/to/env/name
+pip install blobtoolkit
 ```
-Activate this environment as well.
 
-```
-conda activate path/to/env/name
-```
-with both environments activated the conda package required for blobtools can be installed.
 
-```
-conda install -c conda-forge firefox geckodriver
-```
->Blobtools is now installed
-
-> Oh wait, JK
-install the actuall blobtools package with this pip command while both environments are still activae
-```
-pip install blobtools[full]
-```
-> Now blobtools is actuallu installed
 
 # Using Blobtools
 
