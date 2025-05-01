@@ -248,10 +248,33 @@ source path/you/want/env/with/name/bin/activate
 Once the actual virtual evironment is built and activated the blobtools dependencies and executables can be intalled with
 
 ```
-pip install blobtoolkit
+pip install blobtoolkit[full]
 ```
+This will be missing the blobtoolkit-api and blobtoolkit-viewer exectables and will need to be added to the environment manually
 
+```
+cd path/you/want/env/with/name/bin/
+wget https://github.com/genomehubs/blobtoolkit/releases/download/4.4.5/blobtoolkit-api-linux
+wget https://github.com/genomehubs/blobtoolkit/releases/download/4.4.5/blobtoolkit-viewer-linux
+chmod 777 *
+mv blobtoolkit-api-linux blobtoolkit-api
+mv blobtoolkit-viewer-linux blobtoolkit-viewer
+```
+Also to limit issues between conda and python environments also need to sym-link the python3.9 executable to the environment
 
+```
+micromamba activate python3.9-env
+which python3.9
+### copy the file path that this outputs
+cd path/you/want/env/with/name/bin/
+ln -s path/you/copied python3.9
+```
+To activate blobtools 
+```
+source path/you/want/env/with/name/bin/activate
+
+blobtools
+```
 
 # Using Blobtools
 
