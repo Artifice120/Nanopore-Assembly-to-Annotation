@@ -413,11 +413,15 @@ singularity pull docker://gglyptodon/helixer-docker:helixer_v0.3.4_cuda_12.2.2-c
 ```
 Helixer and all of its depencies will be installed.
 
-The models that Helixer uses need to be downloaded next with the following command.
+The models that Helixer uses need to be downloaded next with the following commands.
 
 ```
-PLACEHOLDER
+cd /path/to/save/location
+singularity -B /path/to/save/location exec /path/to/container/helixer-docker.sif fetch_helixer_models.py -l [ pick "fungi" , "invertebrate" , "vertibrate" or "land_plant" ]
 ```
+* /path/to/save/location : The directory that the model files will save to ( best to save them to an empty folder/location ). Be sure to include them in the both next to the "cd" and "-B"
+* /path/to/container/helixer-docker.sif : The directory to where the helixer container was saved to in the previous step
+* -l : specify the lineage that you want to download. The choices "fungi" , "invertebrate" , "vertibrate" and "land_plant" are available. If you want to download all of them just type "-a" instead.
 
 To run the helixer singularity container within an sbatch or bash script use following format:
 ```
