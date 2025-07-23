@@ -34,6 +34,10 @@ the
           eha
            hat
 with kmer "the" having 2 replicates
+
+This would make a histogram with a large amount of kmers in the 1 repeat bin and one at 2 repeats histogram
+
+kmers with low amounts of repeats are considered "noise" as sequencing usually ensures each part of a seqeunce is recorded several times known as "read coverage"
 ````
 To process you're reads through jellyfish simply use 
 ```
