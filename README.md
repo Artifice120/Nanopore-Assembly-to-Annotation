@@ -476,7 +476,7 @@ python3 ui/egapx.py ./examples/input_D_farinae_small.yaml -e singularity -w temp
 ```
 # Functional Annotation
 
-By this point you should have a .tsv file that has a reasonable amount of genes.
+By this point you should have a .gff or .gtf file that has a reasonable amount of genes.
 
 Usually the third column will have a label with gene, cds, intron, or exon. One way to quickly count the number of genes is to count the number of times "gene" is written in the label column (usually 3)
 ```
