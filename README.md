@@ -264,10 +264,8 @@ Also to limit issues between conda and python environments also need to sym-link
 
 ```
 micromamba activate python3.9-env
-which python3.9
-### copy the file path that this outputs
 cd path/you/want/env/with/name/bin/
-ln -s path/you/copied python3.9
+ln -s $(which python3.9) python3.9
 ```
 To activate blobtools 
 ```
