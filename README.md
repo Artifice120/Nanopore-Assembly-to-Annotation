@@ -7,7 +7,7 @@ To avoid these issues it is good practice to remove these errors before assembli
  seqkit sana /input/location.fastq -o /output/location.fastq
 ```
 This command is not too demanding for CPU and memory so it can be ran on a laptop and will take about an hour to finish.
-## Preparing Nanopore reads for Assembly
+## Preparing the reads for Assembly
 --------------
 The title is a bit of a misnomer, we will actually be predicting the size of the assembly using a program called [Jellyfish](https://github.com/gmarcais/Jellyfish) followed by [GenomeScope](https://github.com/schatzlab/genomescope). 
 ### [Jellyfish](https://github.com/gmarcais/Jellyfish)
