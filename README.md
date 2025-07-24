@@ -16,28 +16,28 @@ Jellyfish simply counts all the kmer combinations and makes a histogram text fil
 
 ```
 a simple phrase like
-"the cat in the hat"
+"tacocat"
 with kmer size 3
 becomes...
 
-thecatinthehat
-the
- hec
-  eca
-   cat
-    ati
-     tin
-      int
-       nth
-        the
-         heh
-          eha
-           hat
-with kmer "the" having 2 replicates
+tacocat
+tac
+ aco
+  coc
+   oca
+    cat
 
-This would make a histogram with a large amount of kmers in the 1 repeat bin and one at 2 repeats histogram
+note that all of these three letter kmers seem unique. In reality there are are actually 2 pairs of repeats since they can be read as either forward or backwards since we dont know if we are reading the sense or antisense strand while seequncing each read.
 
-kmers with low amounts of repeats are considered "noise" as sequencing usually ensures each part of a seqeunce is recorded several times known as "read coverage"
+Correcting for antisense the list of kmers becomes
+
+tac tac
+aco aco
+coc
+
+This would make a histogram with a one kmer in the 1 coverage bin and 2 kmers in the 2 coverage bin.
+
+kmers with low amounts of repeats are considered "noise" as sequencing usually ensures all parts of a seqeunce/genome are recorded several times by reads known as "read coverage"
 ````
 To process you're reads through jellyfish simply use 
 ```
