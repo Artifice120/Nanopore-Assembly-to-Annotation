@@ -1,5 +1,5 @@
 # Assembly-to-Annotation... and pathway comparison
-Rough draft for a guide on one way to assembly and annotate nanopore reads 
+Rough draft for a guide on one way to assembly and annotate raw reads 
 ------------
 After a fastq file has been generated from raw reads with [Guppy](https://timkahlke.github.io/LongRead_tutorials/BS_G.html) there will probably be noise in the reads that can cause issues when the reads need to be mapped later on after assembly of the reads into contigs.
 To avoid these issues it is good practice to remove these errors before assembling the reads, although it can also be done after assmebly if need be depending on the assembler that you use (Trinity and Canu don't have issues with noisy reads). I prefer to use the tool [Seq tk](https://github.com/lh3/seqtk) since it is a small module using their sanatize option as seen below: 
