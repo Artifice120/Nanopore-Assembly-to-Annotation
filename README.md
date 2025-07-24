@@ -1,4 +1,4 @@
-# Nanopore-Assembly-to-Annotation
+# Nanopore-Assembly-to-Annotation... and pathway comparison
 Rough draft for a guide on one way to assembly and annotate nanopore reads 
 ------------
 After a fastq file has been generated from raw reads with [Guppy](https://timkahlke.github.io/LongRead_tutorials/BS_G.html) there will probably be noise in the reads that can cause issues when the reads need to be mapped later on after assembly of the reads into contigs.
@@ -679,6 +679,43 @@ agat_sq_add_attributes_from_tsv.pl --gff Macrosiphon.gff --tsv homology-gene-inf
 * --gff : Path to the gff file 
 * --tsv : Path to prepared tsv file 
 * -o : name of output file
+
+# Pathway analysis and Phylogeny
+
+Now that we have an assembled and annotated a genome it would be nice to actually use it for something.
+Since there is a large amount of information it is useful to have the genes summarized by there pathway or function. 
+
+## GO Terms
+GO terms are the group of functions that a gene is assigned to and are also in the EnTAP results table as EggNog Mapper is part of the pipeline.
+
+## KEGG pathways
+
+I find KEGG pathways also known as KO terms to be more useful are their meaning is more rigid since it ties a gene to a specific biochemical pathway. 
+The only downside is the available database is much smaller so many novel pathways will not be captured, especially if the nearest refrence genome is distantnly related or incomplete. 
+Still the KO terms are also a good measure of completeness for the annotations. 
+
+### Assigning KO terms to genes
+
+Unfortunately, a subscription is needed to download the KEGG database. To get around this limitation their free to use webtool [BlastKoala](https://www.kegg.jp/blastkoala/) is used to blast search protein sequences against the blast database. The amino acid sequences need to be extracted first though from the annotations and genome using the program [GFFread](https://github.com/gpertea/gffread)
+
+To extract the protein sequences of annotated transcripts
+
+```
+gffread -g path/to/genome/fasta -y name.faa path/to/file.gff
+```
+This will output a protein fasta file (.faa) that can be submitted to  [BlastKoala](https://www.kegg.jp/blastkoala/) directly.
+
+On thier results page record the modules that are complete as well as the ones that are only missing one reaction it is very likely that those are complete as well and are just either missing an annotation or the annotation was not similar enough to one in thier database.
+
+From here the pathway modules of the genome and other closely related refrences can be compared. Modules that are present in the new genome that are not in the refrence are more significant since the reverse case can just be from incomplete annotations or sequencing. 
+
+## Phylogeny 
+
+The annotations can also be used to asses the phlogeny based on MSA alignments between the new genome annotations and refrence genomes. A well established program has already been made for this [OrthoFinder](https://github.com/OrthoFinder/OrthoFinder).
+
+
+
+
 
 
 
