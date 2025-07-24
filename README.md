@@ -1,4 +1,4 @@
-# Nanopore-Assembly-to-Annotation... and pathway comparison
+# Assembly-to-Annotation... and pathway comparison
 Rough draft for a guide on one way to assembly and annotate nanopore reads 
 ------------
 After a fastq file has been generated from raw reads with [Guppy](https://timkahlke.github.io/LongRead_tutorials/BS_G.html) there will probably be noise in the reads that can cause issues when the reads need to be mapped later on after assembly of the reads into contigs.
