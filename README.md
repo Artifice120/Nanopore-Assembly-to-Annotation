@@ -713,6 +713,8 @@ From here the pathway modules of the genome and other closely related refrences 
 
 The annotations can also be used to asses the phlogeny based on MSA alignments between the new genome annotations and refrence genomes. A well established program has already been made for this [OrthoFinder](https://github.com/OrthoFinder/OrthoFinder).
 
+Then from there if you want to get fancy the MSA output and its tree can be used as inputs for Raxml-NG to allow the use of bootstraping and the values that come with it assuming the appropiate algo is applied in Raxml-NG
+
 
 
 
