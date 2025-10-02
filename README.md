@@ -736,7 +736,32 @@ gffread -g path/to/genome/fasta -y name.faa path/to/file.gff
 ```
 This will output a protein fasta file (.faa) that can be submitted to  [BlastKoala](https://www.kegg.jp/blastkoala/) directly.
 
-On thier results page record the modules that are complete as well as the ones that are only missing one reaction it is very likely that those are complete as well and are just either missing an annotation or the annotation was not similar enough to one in thier database.
+One more thing to fix. Since BlastKoala is open to the public, they limit each job to 10 thousand seequences. This means if you have more you will have to split up your file before submitting to BlastKoala
+
+### Preping BlastKoala submission
+
+from assembled transcripts first count the number of transcripts 
+
+```
+grep '[>]' path/to/trinity.fasta | wc -l
+```
+Then divide the outputby 10,000 rounded up. This is because GhostKoala does not work on more than 10,000 at a time
+
+once, that is worked out translate the fasta to AA seqs
+
+```
+seqkit  translate -j 2 path/to/trinity.fasta >  path/to/trinity.faa
+```
+
+Then split the faa to the number of parts calulated earlier
+
+```
+seqkit split -j 2 -p 10 path/to/trinity.faa
+```
+in this example the ```-p``` option splits it into 10 equal number of sequneces 
+
+> on the GhostKoala website upload the files one at a time using the school e-mail be sure to dowwload the ko term text file for each file
+> then combine those ko lists into one giant file and view then on kepp mapper reconstruct to see the corresponding pathways
 
 From here the pathway modules of the genome and other closely related refrences can be compared. Modules that are present in the new genome that are not in the refrence are more significant since the reverse case can just be from incomplete annotations or sequencing. 
 
