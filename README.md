@@ -1,6 +1,28 @@
 # Assembly-to-Annotation... and pathway comparison
 Rough draft for a guide on one way to assembly and annotate raw reads 
 ------------
+### Overview
+Unfortunately even with major advances in seqeuncing technology; the raw seqeunces recorded from a genome are still broke up into random small pieces. 
+These small pieces of genome are known as ```reads```. Thanks to the current tech a large amount of reads can be generated from one sample.
+So many reads in fact that there are enouggh to cover the whole genome several times.
+This is imaginatevely called ```read coverage``` and it usually expresssed in term of times coverage ( ie enough reads to cover the genome X times ).
+Although this would require you to know the genome size before sequencing so ... 
+So knowing that reads cover the whole genome ( hopefully ) the reads can be overlapped in such a way that you then get the whole genome instead of just the pieces.
+Conceptually, this is done by overlapping the reads and is known as ```genome assembly```
+Mathematically this is done with debrujin graphs since there are often many diffrent ways to overlapp the reads.
+Once reads are assembled you get longer pieces that are called contigous reagions know as ```contigs``` for short.
+These reads can be of various lenghts and quality depending on the assembly method used. In the best case scenario this can cover the whole chromosome or genome also known as a gapless assembly.
+Often times though contigs are just really long segments of the genome that cover "most" of the genome.
+
+Either way once you have contigs you are satisfied with the seequences are often used to predict the genes in the organism.
+this is known as ```gene annotations```. This is best done with RNA-seqeunces as well since the genes are transcribed to RNA.
+Machine learning as well as AI can be used for gene predicitons as well.
+
+Once the gene are annotated in a reasonable way the genes can be grouped by pathway with GO or KO assignment and the actual pathways of the orgainism can be viewed.
+
+> from here there are many diffrent anaylsis that can be done such as differential explression, phylogeny assignemnt, and methylation calling but this guide will just focus on getting the base genome and annotations done.
+ 
+### Sanatizing the raw reads
 After a fastq file has been generated from raw reads with [Guppy](https://timkahlke.github.io/LongRead_tutorials/BS_G.html) there will probably be noise in the reads that can cause issues when the reads need to be mapped later on after assembly of the reads into contigs.
 To avoid these issues it is good practice to remove these errors before assembling the reads, although it can also be done after assmebly if need be depending on the assembler that you use (Trinity and Canu don't have issues with noisy reads). I prefer to use the tool [Seq tk](https://github.com/lh3/seqtk) since it is a small module using their sanatize option as seen below: 
 ```
