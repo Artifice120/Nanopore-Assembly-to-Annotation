@@ -771,9 +771,41 @@ The annotations can also be used to asses the phlogeny based on MSA alignments b
 
 Then from there if you want to get fancy the MSA output and its tree can be used as inputs for Raxml-NG to allow the use of bootstraping and the values that come with it assuming the appropiate algo is applied in Raxml-NG
 
+## TE stuff
 
+EDTA is used to mask the transposable elements. It also provides a gff of the annotated TE's this is useful for also merging gene predictions with the TE's.
+Like in fungus (Pandora) TE's are more numnerous thatn the gene themselves so it can be usefull to merge the two annotations.
 
+### Merging Gff files
 
+In the case of merging TE's and gene preditions, If there are overlapping features we generally trust the gene preditions more as they were made with the TE information provided.
+Because of this the Agat compliment function is used with the gene predictions set as the refrence and the TE's just as the complimenting annotations.
+
+```
+agat_sp_complement_annotations.pl --ref gene-predictions.gff --add TE.gff --out merged.gff
+```
+
+### 2-speed genomes 
+
+Genomes with a high percentage of TE's can sometimes have clusters of consecutive genes that are "enriched".
+This git repo has a collection of perl scripts to test for this.
+https://github.com/rhysf/2speed_genomes
+
+To install:
+
+```
+git clone https://github.com/rhysf/2speed_genomes
+
+cd 2 speed_genomes
+
+micromamba create -p 2s/
+
+micromamba activate 2s/
+
+micromamba install -c bioconda -c conda-forge perl-getopt-long        perl-file-path  perl-data-dumper        perl-findbin    perl-math-matrix        r       zlib    r-xml2  r-ggplot2       r-gridextra     r-gtable        r-gridbase      r-reshape2      r-optparse       r-dplyr r-gghighlight   r-hash  r-ggplot2=3.4   r-ggplot2=3.3
+```
+
+This should download the raw code and also make a conda environment in the same directory with the needed dependencies.
 
 
 
