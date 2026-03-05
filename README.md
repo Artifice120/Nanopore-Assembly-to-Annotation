@@ -518,7 +518,7 @@ By this point you should have a .gff or .gtf file that has a reasonable amount o
 
 Usually the third column will have a label with gene, cds, intron, or exon. One way to quickly count the number of genes is to count the number of times "gene" is written in the label column (usually 3)
 ```
-awk '$3 == "gene"' path/to/file.tsv | wc -l
+awk '{$3 == "gene"}' path/to/file.tsv | wc -l
 ```
 This TSV file can be funcitonally annotated with Entap 
 
