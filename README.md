@@ -1,4 +1,4 @@
-# Assembly-to-Annotation... and pathway comparison
+# Assembly-to-Annotation... and pathway comparison ... and 2-speed markov chains
 Rough draft for a guide on one way to assembly and annotate raw reads 
 ------------
 ### Overview
