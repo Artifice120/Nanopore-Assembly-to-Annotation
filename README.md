@@ -26,12 +26,15 @@ Their are 4 main types of of tech to get the initial raw reads
 
 > Each has its own pros and cons
 
-* Oxford Nanopore Reads (ONT): These are the longest reads. Unfortunately these are also the least accurate. With enough coverage though this can be fixed (majority rule). Each year they get more accurate as well as the basecalling algorithm is powered by a Machine Learning Algorithm.
+* Oxford Nanopore Reads (ONT): These are the longest reads. Unfortunately these are also the least accurate. With enough coverage though this can be fixed (majority rule). Each year they get more accurate as well as the base calling algorithm is powered by a Machine Learning Algorithm.
 * Pacbio Reads (HiFi ?): These reads are not as long (~1Kb) but are extremely accurate. Since they are not as long repetitive genomes can make some complete assemblies impossible.
 * Illumina Reads ( Illumina / Short reads ): Very short reads ( 150 ) also extremely accurate. Usually too short to make a complete assembly but can get a large amount of coverage. Great for polishing an already assembled genome or for a PCR amplified region. Also very cheap.
 * Hi-C Reads (Hi c): Short reads that are tagged for physical adjacency on a genome. Great for combining with long reads to create a complete assembly. The most common way to get a gapless telomere to telomere assembly in plants as of 2024.
- 
-### Sanatizing the raw reads
+
+### Installing the programs
+Many of these programs will not be pre-installed even on a university HPC. Installing a program directly from the source code should be a last resort since many these programs will have conflicting dependent programs ( Dependencies ) as well as different versions of these dependencies. One of three package managers is usually used; [Micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html), [Python](https://pypi.org/project/pip/), and [apptainer/docker](https://apptainer.org/).
+
+### Sanitizing the raw reads
 After a fastq file has been generated from raw reads with [Guppy](https://timkahlke.github.io/LongRead_tutorials/BS_G.html) there will probably be noise in the reads that can cause issues when the reads need to be mapped later on after assembly of the reads into contigs.
 To avoid these issues it is good practice to remove these errors before assembling the reads, although it can also be done after assmebly if need be depending on the assembler that you use (Trinity and Canu don't have issues with noisy reads). I prefer to use the tool [Seq tk](https://github.com/lh3/seqtk) since it is a small module using their sanatize option as seen below: 
 ```
